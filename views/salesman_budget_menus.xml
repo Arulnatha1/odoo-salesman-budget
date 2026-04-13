@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+
+<menuitem id="menu_salesman_budget_root" name="Sales Budget" sequence="51" web_icon="salesman_budget,static/description/icon.png"/>
+
+<menuitem id="menu_salesman_budget_dashboard" name="Dashboard" parent="menu_salesman_budget_root" action="action_salesman_budget_line_graph" sequence="10"/>
+
+<menuitem id="menu_salesman_budget_list" name="Budgets" parent="menu_salesman_budget_root" action="action_salesman_budget" sequence="20"/>
+
+<menuitem id="menu_salesman_budget_import" name="Import from CSV" parent="menu_salesman_budget_root" action="action_budget_import_wizard" sequence="30"/>
+
+</data>
+</odoo>

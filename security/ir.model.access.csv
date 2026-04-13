@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_salesman_budget_manager,salesman.budget manager,salesman_budget.model_salesman_budget,base.group_system,1,1,1,1
+access_salesman_budget_user,salesman.budget user,salesman_budget.model_salesman_budget,base.group_user,1,0,0,0
+access_salesman_budget_line_manager,salesman.budget.line manager,salesman_budget.model_salesman_budget_line,base.group_system,1,1,1,1
+access_salesman_budget_line_user,salesman.budget.line user,salesman_budget.model_salesman_budget_line,base.group_user,1,0,0,0
+access_budget_import_wizard,budget.import.wizard,salesman_budget.model_budget_import_wizard,base.group_system,1,1,1,1

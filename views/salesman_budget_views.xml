@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+
+<record id="view_salesman_budget_form" model="ir.ui.view">
+<field name="name">salesman.budget.form</field>
+<field name="model">salesman.budget</field>
+<field name="arch" type="xml">
+<form string="Salesman GP Budget">
+<header>
+<button name="action_generate_budget_lines" string="Generate 12 Monthly Lines" type="object" class="btn-primary" invisible="budget_line_ids"/>
+<button name="action_activate" string="Activate" type="object" class="btn-primary" invisible="state != 'draft'"/>
+<button name="action_refresh_actuals" string="Refresh Actuals" type="object" invisible="state == 'draft'"/>
+<button name="action_close" string="Close Year" type="object" invisible="state != 'active'"/>
+<button name="action_reset_draft" string="Reset to Draft" type="object" invisible="state != 'closed'"/>
+<field name="state" widget="statusbar" statusbar_visible="draft,active,closed"/>
+</header>
+<sheet>
+<div class="oe_title">
+<h1><field name="display_name" readonly="1"/></h1>
+</div>
+<group>
+<group string="Salesman">
+<field name="salesman_id"/>
+<field name="year"/>
+<field name="company_id" groups="base.group_multi_company"/>
+<field name="currency_id" invisible="1"/>
+</group>
+<group string="Year Summary">
+<field name="total_budget"/>
+<field name="total_actual"/>
+<field name="total_variance"/>
+<field name="total_achievement" string="Achievement %"/>
+</group>
+</group>
+<field name="budget_line_ids">
+<list editable="bottom" decoration-success="traffic_light == 'green'" decoration-warning="traffic_light == 'amber'" decoration-danger="traffic_light == 'red'" decoration-muted="traffic_light == 'grey'">
+<field name="month_name" readonly="1" string="Month"/>
+<field name="budget_amount" string="GP Budget"/>
+<field name="actual_gp" readonly="1" string="Actual GP"/>
+<field name="variance" readonly="1"/>
+<field name="achievement_percent" readonly="1" string="Achievement %"/>
+<field name="traffic_light" readonly="1" widget="badge" decoration-success="traffic_light == 'green'" decoration-warning="traffic_light == 'amber'" decoration-danger="traffic_light == 'red'" decoration-muted="traffic_light == 'grey'"/>
+<field name="invoice_count" readonly="1" string="Invoices"/>
+</list>
+</field>
+</sheet>
+<chatter/>
+</form>
+</field>
+</record>
+
+<record id="view_salesman_budget_list" model="ir.ui.view">
+<field name="name">salesman.budget.list</field>
+<field name="model">salesman.budget</field>
+<field name="arch" type="xml">
+<list string="Salesman Budgets" decoration-success="total_achievement >= 80" decoration-warning="total_achievement >= 50 and total_achievement &lt; 80" decoration-danger="total_achievement &lt; 50 and total_budget &gt; 0">
+<field name="salesman_id"/>
+<field name="year"/>
+<field name="state" widget="badge" decoration-success="state == 'active'" decoration-muted="state == 'closed'" decoration-warning="state == 'draft'"/>
+<field name="total_budget" sum="Total Budget"/>
+<field name="total_actual" sum="Total Actual"/>
+<field name="total_variance" sum="Total Variance"/>
+<field name="total_achievement" string="Achievement %"/>
+</list>
+</field>
+</record>
+
+<record id="view_salesman_budget_search" model="ir.ui.view">
+<field name="name">salesman.budget.search</field>
+<field name="model">salesman.budget</field>
+<field name="arch" type="xml">
+<search string="Search Budgets">
+<field name="salesman_id"/>
+<field name="year"/>
+<filter name="active" string="Active" domain="[('state','=','active')]"/>
+<filter name="my_budget" string="My Budget" domain="[('salesman_id','=',uid)]"/>
+<filter name="current_year" string="This Year" domain="[('year','=',context_today().year)]"/>
+<separator/>
+<group expand="0" string="Group By">
+<filter name="group_by_salesman" string="Salesman" context="{'group_by':'salesman_id'}"/>
+<filter name="group_by_year" string="Year" context="{'group_by':'year'}"/>
+</group>
+</search>
+</field>
+</record>
+
+<record id="view_salesman_budget_graph" model="ir.ui.view">
+<field name="name">salesman.budget.line.graph</field>
+<field name="model">salesman.budget.line</field>
+<field name="arch" type="xml">
+<graph string="GP Budget vs Actual" type="bar">
+<field name="month_name" type="row"/>
+<field name="budget_amount" type="measure"/>
+<field name="actual_gp" type="measure"/>
+<field name="variance" type="measure"/>
+</graph>
+</field>
+</record>
+
+<record id="view_salesman_budget_pivot" model="ir.ui.view">
+<field name="name">salesman.budget.line.pivot</field>
+<field name="model">salesman.budget.line</field>
+<field name="arch" type="xml">
+<pivot string="GP Budget vs Actual">
+<field name="salesman_id" type="row"/>
+<field name="month_name" type="col"/>
+<field name="budget_amount" type="measure"/>
+<field name="actual_gp" type="measure"/>
+<field name="variance" type="measure"/>
+<field name="achievement_percent" type="measure"/>
+</pivot>
+</field>
+</record>
+
+<record id="action_salesman_budget" model="ir.actions.act_window">
+<field name="name">Salesman GP Budgets</field>
+<field name="res_model">salesman.budget</field>
+<field name="view_mode">list,form</field>
+<field name="search_view_id" ref="view_salesman_budget_search"/>
+<field name="help" type="html">
+<p class="o_view_nocontent_smiling_face">Create your first salesman budget</p>
+<p>Set monthly gross profit targets per salesman. Actuals are computed automatically from posted invoices.</p>
+</field>
+</record>
+
+<record id="action_salesman_budget_line_graph" model="ir.actions.act_window">
+<field name="name">GP Performance Dashboard</field>
+<field name="res_model">salesman.budget.line</field>
+<field name="view_mode">graph,pivot,list</field>
+<field name="help" type="html">
+<p class="o_view_nocontent_smiling_face">No data yet</p>
+<p>Activate salesman budgets to see performance data here.</p>
+</field>
+</record>
+
+</data>
+</odoo>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data noupdate="1">
+
+<record id="ir_cron_refresh_budget_actuals" model="ir.cron">
+<field name="name">Salesman Budget: Refresh Actual GP</field>
+<field name="model_id" ref="model_salesman_budget_line"/>
+<field name="state">code</field>
+<field name="code">
+active_lines = model.search([('budget_id.state', '=', 'active')])
+active_lines._compute_actual_gp()
+</field>
+<field name="interval_number">1</field>
+<field name="interval_type">days</field>
+<field name="active">True</field>
+<field name="user_id" ref="base.user_root"/>
+</record>
+
+</data>
+</odoo>

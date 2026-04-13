@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+
+<record id="action_report_salesman_budget" model="ir.actions.report">
+<field name="name">Monthly Performance Report</field>
+<field name="model">salesman.budget</field>
+<field name="report_type">qweb-pdf</field>
+<field name="report_name">salesman_budget.report_salesman_budget_document</field>
+<field name="report_file">salesman_budget.report_salesman_budget_document</field>
+<field name="print_report_name">'GP Budget Report - %s' % object.display_name</field>
+<field name="binding_model_id" ref="model_salesman_budget"/>
+<field name="binding_type">report</field>
+</record>
+
+</data>
+</odoo>

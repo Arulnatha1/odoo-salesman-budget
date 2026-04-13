@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+
+<template id="report_salesman_budget_document">
+<t t-call="web.html_container">
+<t t-foreach="docs" t-as="doc">
+<t t-call="web.external_layout">
+<div class="page">
+
+<div class="row mb-4">
+<div class="col-6">
+<h2 class="text-primary">GP Budget Performance Report</h2>
+<h4><t t-esc="doc.salesman_id.name"/></h4>
+<p>Financial Year: <strong><t t-esc="doc.year"/></strong></p>
+</div>
+<div class="col-6 text-end">
+<p>Status: <strong><t t-esc="doc.state"/></strong></p>
+</div>
+</div>
+
+<div class="row mb-4">
+<div class="col-12">
+<table class="table table-sm table-bordered">
+<thead class="table-dark">
+<tr>
+<th>Month</th>
+<th class="text-end">GP Budget</th>
+<th class="text-end">Actual GP</th>
+<th class="text-end">Variance</th>
+<th class="text-end">Achievement %</th>
+<th class="text-center">Status</th>
+</tr>
+</thead>
+<tbody>
+<t t-foreach="doc.budget_line_ids.sorted('month')" t-as="line">
+<tr t-attf-style="background: #{
+    '#d4edda' if line.traffic_light == 'green'
+    else '#fff3cd' if line.traffic_light == 'amber'
+    else '#f8d7da' if line.traffic_light == 'red'
+    else '#f8f9fa'
+}">
+<td><t t-esc="line.month_name"/></td>
+<td class="text-end">
+<t t-esc="'{:,.2f}'.format(line.budget_amount)"/>
+</td>
+<td class="text-end">
+<t t-esc="'{:,.2f}'.format(line.actual_gp)"/>
+</td>
+<td class="text-end">
+<t t-esc="'{:,.2f}'.format(line.variance)"/>
+</td>
+<td class="text-end">
+<t t-esc="'{:.1f}%'.format(line.achievement_percent)"/>
+</td>
+<td class="text-center">
+<t t-esc="dict(line._fields['traffic_light'].selection).get(line.traffic_light, '')"/>
+</td>
+</tr>
+</t>
+</tbody>
+<tfoot>
+<tr class="table-dark">
+<td><strong>Total</strong></td>
+<td class="text-end">
+<strong>
+<t t-esc="'{:,.2f}'.format(doc.total_budget)"/>
+</strong>
+</td>
+<td class="text-end">
+<strong>
+<t t-esc="'{:,.2f}'.format(doc.total_actual)"/>
+</strong>
+</td>
+<td class="text-end">
+<strong>
+<t t-esc="'{:,.2f}'.format(doc.total_variance)"/>
+</strong>
+</td>
+<td class="text-end">
+<strong>
+<t t-esc="'{:.1f}%'.format(doc.total_achievement)"/>
+</strong>
+</td>
+<td></td>
+</tr>
+</tfoot>
+</table>
+</div>
+</div>
+
+<div class="row mt-3">
+<div class="col-12">
+<p class="text-muted" style="font-size:11px;">
+Note: Actual GP is computed as invoice revenue minus product standard cost at the time of this report. Standard costs may differ from costs at time of invoicing.
+</p>
+</div>
+</div>
+
+</div>
+</t>
+</t>
+</t>
+</template>
+
+</data>
+</odoo>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+
+<record id="view_budget_import_wizard_form" model="ir.ui.view">
+<field name="name">budget.import.wizard.form</field>
+<field name="model">budget.import.wizard</field>
+<field name="arch" type="xml">
+<form string="Budget Import / Export">
+<group string="Step 1 — Download Template">
+<field name="year" string="Financial Year"/>
+</group>
+<group>
+<button name="action_download_template" string="Download CSV Template" type="object" class="btn-primary"/>
+</group>
+<group invisible="not template_file" string="Template Ready">
+<field name="template_file" widget="binary" filename="template_filename" string="Click to Download"/>
+<field name="template_filename" invisible="1"/>
+</group>
+<group string="Step 2 — Fill and Upload">
+<div class="alert alert-info" role="alert">
+<p><strong>How to use the template:</strong></p>
+<ol>
+<li>Click Download CSV Template above</li>
+<li>Open the file in Excel or any spreadsheet app</li>
+<li>Fill in the monthly GP budget amounts for each salesman</li>
+<li>Delete the instruction row (the row starting with #)</li>
+<li>Save as CSV format</li>
+<li>Upload the saved file below and click Import</li>
+</ol>
+</div>
+<field name="csv_file" widget="binary" filename="csv_filename" string="Upload Filled CSV"/>
+<field name="csv_filename" invisible="1"/>
+</group>
+<group invisible="not result_message" string="Import Result">
+<field name="result_message" nolabel="1" readonly="1"/>
+</group>
+<footer>
+<button name="action_import" string="Import Budgets" type="object" class="btn-primary" invisible="not csv_file"/>
+<button string="Close" class="btn-secondary" special="cancel"/>
+</footer>
+</form>
+</field>
+</record>
+
+<record id="action_budget_import_wizard" model="ir.actions.act_window">
+<field name="name">Import Budget from CSV</field>
+<field name="res_model">budget.import.wizard</field>
+<field name="view_mode">form</field>
+<field name="target">new</field>
+</record>
+
+</data>
+</odoo>

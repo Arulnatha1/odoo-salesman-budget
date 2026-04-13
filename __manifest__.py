@@ -1,0 +1,21 @@
+{
+    'name': 'Salesman Budget vs Actual',
+    'version': '18.0.1.0.0',
+    'category': 'Sales',
+    'summary': 'Track salesman gross profit budget vs actual performance with traffic light dashboard',
+    'author': 'Arulnatha',
+    'depends': ['base', 'mail', 'sale', 'account', 'sales_team'],
+    'data': [
+        'security/ir.model.access.csv',
+        'data/salesman_budget_data.xml',
+        'wizard/budget_import_wizard_views.xml',
+        'report/salesman_budget_report.xml',
+        'report/salesman_budget_report_template.xml',
+        'views/salesman_budget_views.xml',
+        'views/salesman_budget_menus.xml',
+    ],
+    'installable': True,
+    'auto_install': False,
+    'application': True,
+    'license': 'LGPL-3',
+}
