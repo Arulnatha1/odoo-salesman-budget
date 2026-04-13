@@ -78,7 +78,7 @@ This module solves that by:
 │  SALESMAN            │  YEAR SUMMARY                                │
 │  Salesman: Marc Demo │  Total Budget    :  64,000.00               │
 │  Year    : 2026      │  Total Actual GP :  -6,500.00               │
-│  Company : Aletek    │  Total Variance  : -70,500.00               │
+│  Company : Company   │  Total Variance  : -70,500.00               │
 │                      │  Achievement %   :     -10.2%               │
 ├──────────┬───────────┬──────────┬──────────┬──────────┬────────────┤
 │  Month   │ GP Budget │ Actual GP│ Variance │ Achiev % │ Status     │
